@@ -1,29 +1,24 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const OTPInput = () => {
-  const [otp, setOtp] = useState(['', '', '', '']);
+  const [otp, setOtp] = useState(null);
+  const [isCompleted, setIsCompleted] = useState(false);
 
-  const handleOtpChange = (index, value) => {
-    if (/[^0-9]/.test(value)) return; // Only allow numeric input
-    const newOtp = [...otp];
-    newOtp[index] = value;
-    setOtp(newOtp);
-  };
+  useEffect(() => {
+    if(isCompleted) {
+      // send otp to backend
+      // check if otp if correct
+      // if correct -> signin the user
+      // else -> return a message to re-enter otp & popup
+
+    }
+  }, [isCompleted])
+
 
   return (
     <div>
       <h2>Enter OTP</h2>
-      <div>
-        {otp.map((digit, index) => (
-          <input
-            key={index}
-            type="text"
-            maxLength="1"
-            value={digit}
-            onChange={(e) => handleOtpChange(index, e.target.value)}
-          />
-        ))}
-      </div>
+      <input type="text" maxLength="4" value={otp} onChange={(e) => setOtp(e.target.value)} />
     </div>
   );
 };

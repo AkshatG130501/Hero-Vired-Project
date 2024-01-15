@@ -1,13 +1,55 @@
-import React from 'react';
+import React,{useState} from 'react';
+import axios from 'axios';
+import {useNavigate} from 'react-router-dom';
 
-const Dashboard = ({selectedProgram}) => {
+const AddDashboard = ({ onDeleteButtonClick }) => {
+  
 
-  console.log('selectedProgram', selectedProgram);
+    const [programs,setPrograms] = useState({
+      name : "",
+      price:0,
+      domain:"",
+      program_type:"",
+      registrations_status:"",
+      description:"",
+      placement_assurance:false,
+      image_url:"",
+      university_name:"",
+      faculty_profile:"",
+      learning_hours:0,
+      certificate_diploma:"",
+      eligibility_criteria:"",
+    })
+
+  const navigate = useNavigate()
+
+  const handleChange = (e) => {
+    const {name,value} = e.target;
+    console.log(name,value);
+    setPrograms((prev)=>({...prev,[e.target.name]:e.target.value}));
+  };
+  const handleChangeInCheckBox = (e) => {
+    const { name, value } = e.target;
+    let modifiedValue = value === "on" ? true : false;
+    console.log(name, modifiedValue);
+    setPrograms((prev) => ({ ...prev, [name]: modifiedValue }));
+  };
+  
+ 
+  const handleClick = async e=>{
+    e.preventDefault()
+    try {
+      await axios.post("/signup/programs", programs)
+      navigate("/")
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <div className="px-10 py-12 w-full max-w-screen-lg mx-auto bg-gray-100">
-      <h1 className="text-3xl font-bold mb-2 text-black">Program Name</h1>
-      <p className="text-sm text-black mb-4"><span className="text-red-500">*</span> Details of the Program</p>
+      <h1 className="text-3xl font-bold mb-2 text-black">Add Program</h1>
+      <p className="text-sm text-black mb-4"><span className="text-red-500">*</span> Required to save as Program</p>
 
       <h2 className="text-2xl font-bold mb-2 text-black">Confirm Program</h2>
 
@@ -22,7 +64,7 @@ const Dashboard = ({selectedProgram}) => {
           <div className="relative w-48">
             <span className="absolute inset-y-0 left-2 flex items-center text-gray-600">INR</span>
             <input
-              value={selectedProgram.price}
+              onChange={handleChange}
               type="Number"
               id="price"
               name="price"
@@ -35,14 +77,25 @@ const Dashboard = ({selectedProgram}) => {
         {/* Domain Drop-down */}
         <div className="flex flex-col">
           <label htmlFor="domain" className="text-black mb-2 font-bold">
-            {selectedProgram.domain}
+            <span className="text-red-500">*</span> Domain
           </label>
+          <select
+            onChange={handleChange}
+            id="domain"
+            name="domain"
+            className="block border border-gray-400 rounded-md py-1.5 pl-2 pr-6 focus:outline-none focus:ring focus:border-blue-300"
+          >
+            <option value="" disabled selected>Choose Domain</option>
+            <option value="tech">Tech</option>
+            <option value="data">Data</option>
+            <option value="finance">Finance</option>
+          </select>
         </div>
 
         {/* Placement Assurance Checkbox */}
         <div className="flex items-center">
           <input
-            value={selectedProgram.placement_assurance}
+            onChange={handleChangeInCheckBox}
             type="checkbox"
             id="placement_assurance"
             name="placement_assurance"
@@ -69,7 +122,7 @@ const Dashboard = ({selectedProgram}) => {
             <span className="text-red-500">*</span> Name
           </label>
           <input
-            value={selectedProgram.name}
+            onChange={handleChange}
             type="text"
             id="name"
             name="name"
@@ -84,8 +137,13 @@ const Dashboard = ({selectedProgram}) => {
             <span className="text-red-500">*</span>Program Type
           </label>
           <div className="flex items-center space-x-4">
-            <label id="program_type" name="" htmlFor="program_type">
-              {selectedProgram.program_type}
+            <label htmlFor="ft">
+              <input onChange={handleChange} type="radio" id="ft" name="programType" value="FT" className="mr-1" />
+              FT
+            </label>
+            <label htmlFor="pt">
+              <input onChange={handleChange} type="radio" id="pt" name="programType" value="PT" className="mr-1" />
+              PT
             </label>
           </div>
         </div>
@@ -96,8 +154,13 @@ const Dashboard = ({selectedProgram}) => {
             <span className="text-red-500">*</span> Registration Open
           </label>
           <div className="flex items-center space-x-4">
-            <label htmlFor="yes" name="registrations_status">
-              {selectedProgram.registrations_status}
+            <label htmlFor="yes">
+              <input onChange={handleChange} type="radio" id="yes" name="registrationOpen" value="Yes" className="mr-1" />
+              Yes
+            </label>
+            <label htmlFor="no">
+              <input onChange={handleChange} type="radio" id="no" name="registrationOpen" value="No" className="mr-1" />
+              No
             </label>
           </div>
         </div>
@@ -112,7 +175,7 @@ const Dashboard = ({selectedProgram}) => {
             <span className="text-red-500">*</span> University Name/Partner
           </label>
           <input
-            value={selectedProgram.university_name}
+            onChange={handleChange}
             type="text"
             id="universityName"
             name="universityName"
@@ -124,9 +187,18 @@ const Dashboard = ({selectedProgram}) => {
         {/* Certificate/Diploma Drop-down */}
         <div className="flex flex-col">
           <label htmlFor="certificateDiploma" className="text-black mb-2 font-bold">
-            {selectedProgram.certificate_diploma}
+            <span className="text-red-500">*</span> Certificate or Diploma
           </label>
-          
+          <select
+            onChange={handleChange}
+            id="certificateDiploma"
+            name="certificateDiploma"
+            className="block border border-gray-400 rounded-md py-1.5 pl-2 pr-6 focus:outline-none focus:ring focus:border-blue-300"
+          >
+            <option value="" disabled selected>Select</option>
+            <option value="certificate">Certificate</option>
+            <option value="diploma">Diploma</option>
+          </select>
         </div>
 
         {/* Faculty Profile Text-box */}
@@ -135,7 +207,7 @@ const Dashboard = ({selectedProgram}) => {
             <span className="text-red-500">*</span> Faculty Profile
           </label>
           <input
-            value={selectedProgram.faculty_profile}
+            onChange={handleChange}
             type="text"
             id="facultyProfile"
             name="facultyProfile"
@@ -154,8 +226,7 @@ const Dashboard = ({selectedProgram}) => {
             <span className="text-red-500">*</span> Learning Hours/Duration
           </label>
           <input
-            value={selectedProgram.learning_hours}
-            disabled
+            onChange={handleChange}
             type="number"
             id="learningHours"
             name="learningHours"
@@ -170,7 +241,7 @@ const Dashboard = ({selectedProgram}) => {
             Eligibility Criteria
           </label>
           <input
-            value={selectedProgram.eligibility_criteria}
+            onChange={handleChange}
             type="text"
             id="eligibilityCriteria"
             name="eligibilityCriteria"
@@ -185,7 +256,7 @@ const Dashboard = ({selectedProgram}) => {
             <span className="text-red-500">*</span> Image Url
           </label>
           <input
-            value={selectedProgram.image_url}
+            onChange={handleChange}
             type="text"
             id="imageUrl"
             name="imageUrl"
@@ -201,7 +272,7 @@ const Dashboard = ({selectedProgram}) => {
           <span className="text-red-500">*</span> Description
         </label>
         <input
-          value={selectedProgram.description}
+          onChange={handleChange}
           type="text"
           id="description"
           name="description"
@@ -209,8 +280,23 @@ const Dashboard = ({selectedProgram}) => {
           placeholder="Program Information / Header"
         />
       </div>
+
+      {/* Delete, Save Draft, Save Program Buttons */}
+      <div className="flex justify-between mb-8">
+        {/* Delete Button */}
+        <button onClick={onDeleteButtonClick} className="bg-red-500 text-white px-4 py-2 flex items-center space-x-2">
+          <span>Delete</span>
+          {/* Add Delete icon here if you have one */}
+        </button>
+
+        {/* Save Draft Button */}
+        <button className="bg-white text-black px-4 py-2">Save Draft</button>
+
+        {/* Save Program Button */}
+        <button onClick={handleClick} className="bg-blue-500 text-white px-4 py-2">Save Program</button>
+      </div>
     </div>
   );
 };
 
-export default Dashboard;
+export default AddDashboard;

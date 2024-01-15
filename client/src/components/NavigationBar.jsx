@@ -3,11 +3,15 @@ import axios from 'axios';
 import add from './../assets/add.png';
 import EditDashboard from './EditDashboard';
 
-export default function NavigationBar({ onAddButtonClick }) {
+export default function NavigationBar({ onAddButtonClick, setSelectedProgram, setShowDashboard }) {
   const [selectedCategoryPredefined, setSelectedCategoryPredefined] = useState('All');
   const [selectedCategoryDatabase, setSelectedCategoryDatabase] = useState('All');
   const [programNames, setProgramNames] = useState([]);
-  const [selectedProgram, setSelectedProgram] = useState(null); 
+
+  function handleLogout() {
+    // TODO: logout logic
+  }
+
 
   useEffect(() => {
     const fetchProgramNames = async () => {
@@ -46,13 +50,15 @@ export default function NavigationBar({ onAddButtonClick }) {
     fetchProgramNames();
   }, [selectedCategoryPredefined]); // Include selectedCategoryPredefined in the dependency array
 
-  const handleButtonClickPredefined = (category) => {
-    setSelectedCategoryPredefined(category);
+  const handleButtonClickPredefined = (program) => {
+    setSelectedCategoryPredefined(program);
   };
 
-  const handleButtonClickDatabase = (category) => {
-    setSelectedCategoryDatabase(category);
-    setSelectedProgram(category); 
+  const handleButtonClickDatabase = (program) => {
+    // TODO:
+    setSelectedCategoryDatabase(program.name);
+    setShowDashboard(false);
+    setSelectedProgram(program); 
   };
 
 
@@ -103,16 +109,19 @@ export default function NavigationBar({ onAddButtonClick }) {
         <div className="flex flex-col mt-4 space-y-2">
           {programNames.map(program => (
             <button 
-              key={program.id}  // Replace 'id' with the actual unique identifier field in your database
+              key={program.id}
               className={`transition-colors duration-300 ease-in-out 
                           ${selectedCategoryDatabase === program.name ? 'bg-blue-300' : 'bg-white'} 
                           text-black border border-black rounded-full px-3 py-1.5 text-xs font-bold focus:outline-none`}
-              onClick={() => handleButtonClickDatabase(program.name)}
+              onClick={() => handleButtonClickDatabase(program)}
             >
               {program.name}
             </button>
           ))}
         </div>
+
+        {/* Logout Button */}
+        <button className='border-2 border-black px-4 py-2 bg-red-500 hover:bg-red-700 text-black m-4 rounded-lg' onClick={handleLogout}>Logout</button>
     </div>
     </>
   );
