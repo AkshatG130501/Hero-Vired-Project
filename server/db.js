@@ -29,23 +29,7 @@ pool.on('error', (err, client) => {
     process.exit(-1);
   });
   
-  
+export default pool;
 
-  export const getTasks = async () => {
-    try {
-      const result = await pool.query(`
-      SELECT * FROM dummy_table;`);
-      console.log(result);
-      if (result.rows) {
-        console.log(`showing all entries`);
-        console.table(result.rows);
-      } else {
-        console.log(`cannot show entries`);
-      }
-      return result.rows;
-    } catch (error) {
-      console.log(`something went wrong in getTasks \n${error}\nthis is not cool`);
-    }
   
-  }
   

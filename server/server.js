@@ -5,8 +5,14 @@ import signupRoutes from './src/programs/routes.js';
 import cors from 'cors';
 
 const app = express();
-app.use(cors());
-
+// app.use(cors());
+const corsOptions = {
+    origin: process.env.FRONTEND_URL || "http://localhost:5173",
+    credentials: true,
+    optionSuccessStatus: 200,
+  };
+  
+  app.use(cors(corsOptions));
 // Middleware to parse JSON data in the request body
 app.use(express.json());
 
