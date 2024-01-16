@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import OTPInput from './OtpForm';
+import { backend_url } from './variables';
 
 const Signup = () => {
   const [sentOtpState, setSentOtpState] = useState(false);
@@ -12,7 +13,7 @@ const Signup = () => {
   const handleSignup = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3000/signup', {
+      const response = await axios.post(`${backend_url}/signup`, {
         otp: otp,
         fullname: name,
         email: email,
@@ -32,7 +33,7 @@ const Signup = () => {
   const sendOtp = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3000/signup/otp', {
+      const response = await axios.post(`${backend_url}/signup/otp`, {
         email: email
       });
 

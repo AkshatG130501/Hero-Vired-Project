@@ -1,6 +1,7 @@
 import React,{useState} from 'react';
 import axios from 'axios';
 import {useNavigate} from 'react-router-dom';
+import { backend_url } from '../variables.js';
 
 const AddDashboard = ({ onDeleteButtonClick }) => {
   
@@ -39,7 +40,7 @@ const AddDashboard = ({ onDeleteButtonClick }) => {
   const handleClick = async e=>{
     e.preventDefault()
     try {
-      await axios.post("/programs", programs)
+      await axios.post(`${backend_url}/programs`, programs)
       navigate("/")
     } catch (error) {
       console.log(error);

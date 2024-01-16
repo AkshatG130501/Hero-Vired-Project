@@ -1,6 +1,7 @@
 import React , {useState} from 'react';
 import axios from 'axios';
 import {useNavigate} from 'react-router-dom';
+import { backend_url } from '../variables.js';
 
 const EditDashboard = ({selectedProgram, setShowEditDashboard}) => {
 
@@ -47,7 +48,7 @@ const EditDashboard = ({selectedProgram, setShowEditDashboard}) => {
   const handleClick = async e=>{
     e.preventDefault()
     try {
-      await axios.post("/programs", programs)
+      await axios.post(`${backend_url}/programs`, programs)
       navigate("/")
     } catch (error) {
       console.log(error);
