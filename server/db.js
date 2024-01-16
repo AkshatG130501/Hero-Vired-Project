@@ -5,23 +5,28 @@ const { Client } = pg;
 
 
 
-// const client = new Client({
-//   host: 'localhost',
-//   port: 5432,
-//   database: 'mydatabase',
-//   user: 'postgres',
-//   password: 'mysecretpassword',
-// });
-
 const client = new Client({
-  host: 'dpg-cmj3agla73kc739o4slg-a.oregon-postgres.render.com',
+  host: 'localhost',
   port: 5432,
-  database: 'herovired_akshat',
-  user: 'herovired_akshat_user',
-  password: 'Yj7OiyhmRXbRHhSvHSCgFJ1Kep48Qbmx',
+  database: 'mydatabase',
+  user: 'postgres',
+  password: 'mysecretpassword',
 });
 
-await client.connect();
+// const client = new Client({
+//   host: 'dpg-cmj3agla73kc739o4slg-a.oregon-postgres.render.com',
+//   port: 5432,
+//   database: 'herovired_akshat',
+//   user: 'herovired_akshat_user',
+//   password: 'Yj7OiyhmRXbRHhSvHSCgFJ1Kep48Qbmx',
+// });
+
+try {
+  await client.connect();
+} catch (error) {
+  console.error(error);
+}
+
 
 export default client;
 
