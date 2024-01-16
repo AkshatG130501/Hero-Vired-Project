@@ -1,17 +1,16 @@
-import { removeProgram,inProgram,checkName,getTasks } from "../programs/queries.js";
-import pool from "../../db.js";
+import supabase from "../config/supabaseClient.js";
 
 export const getPrograms = async (req, res) => {
-    // let { data: Programs, error } = await supabase
-    // .from('table1')
-    // .select();
-    let rows = await getTasks();
-    return res.status(200).json({
-      msg: rows
-    });
-  };
+  const {data,error} = await supabase.from('programs').select();
+  if(data){
+    res.send(data);
+  }else{
+    console.log(error);
+  }
+};
   
-  export const addPrograms = async (req, res) => {
+export const addPrograms = async (req, res) => {
+  try {
     const {
       name,
       price,
@@ -26,15 +25,13 @@ export const getPrograms = async (req, res) => {
       learning_hours,
       certificate_diploma,
       eligibility_criteria,
+      userid
     } = req.body;
-  
-    try {
-  
-      // Add program to the database
-      const result = await pool.query(
-        `INSERT INTO programs ("name", "price", "domain", "program_type", "registrations_status", "description", "placement_assurance", "image_url", "university_name", "faculty_profile", "learning_hours", "certificate_diploma", "eligibility_criteria") 
-        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) RETURNING *`,
-        [
+
+    const { data, error } = await supabase
+      .from('programs')
+      .insert([
+        {
           name,
           price,
           domain,
@@ -48,91 +45,107 @@ export const getPrograms = async (req, res) => {
           learning_hours,
           certificate_diploma,
           eligibility_criteria,
-        ]
-      );
-  
-      res.status(201).json({ message: 'Program created successfully', insertedProgram: result.rows[0] });
-    } catch (error) {
-      console.error('Error adding program:', error.message);
-      res.status(500).json({ message: 'Internal Server Error' });
-    }
-  };
-  
-  
-  
-  export const deleteProgram = async (req, res) => {
-    const programName = req.params.Name;
-  
-    try {
-      // Use the pool to execute the DELETE query
-      const result = await pool.query('DELETE FROM programs WHERE "name" = $1 RETURNING *', [programName]);
-  
-      if (result.rows.length === 0) {
-        // If no rows were affected, the program with the specified name was not found
-        res.status(404).json({ error: 'Program not found' });
-      } else {
-        // Successful deletion
-        res.status(200).json({ message: 'Program deleted successfully', deletedProgram: result.rows[0] });
-      }
-    } catch (error) {
-      console.error('Error deleting program:', error);
+          userid
+        }
+      ]);
+
+    if (error) {
+      console.error(error);
       res.status(500).json({ error: 'Internal Server Error' });
+      return;
     }
-  };
+
+    res.status(201).json({ msg: 'Program added successfully', data });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
   
   
-  export const updateProgram = async (req, res) => {
-    const oldProgramName = req.params.Name; // The current Name value in the database
-    const {
-      name,
-      price,
-      domain,
-      program_type,
-      registrations_status,
-      description,
-      placement_assurance,
-      image_url,
-      university_name,
-      faculty_profile,
-      learning_hours,
-      certificate_diploma,
-      eligibility_criteria,
-    } = req.body;
   
-    try {
-      // Use the pool to execute the UPDATE query
-      const result = await pool.query(
-        `UPDATE programs 
-         SET "name"=$1, "price"=$2, "domain"=$3, "program_type"=$4, "registrations_status"=$5, "description"=$6, "placement_assurance"=$7, "image_url"=$8, "university_name"=$9, "faculty_profile"=$10, "learning_hours"=$11, "certificate_diploma"=$12, "eligibility_criteria"=$13
-         WHERE "Name" = $14 
-         RETURNING *`,
-        [
-          name,
-          price,
-          domain,
-          program_type,
-          registrations_status,
-          description,
-          placement_assurance,
-          image_url,
-          university_name,
-          faculty_profile,
-          learning_hours,
-          certificate_diploma,
-          eligibility_criteria,
-          oldProgramName, // Use the old Name value in the WHERE clause
-        ]
-      );
-  
-      if (result.rows.length === 0) {
-        res.status(404).json({ error: 'Program not found' });
-      } else {
-        res.status(200).json({ message: 'Program updated successfully', updatedProgram: result.rows[0] });
-      }
-    } catch (error) {
-      console.error('Error updating program:', error);
+export const deleteProgram = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const { data, error } = await supabase
+      .from('programs')
+      .delete()
+      .eq('programid', id);
+
+    if (error) {
+      console.error(error);
       res.status(500).json({ error: 'Internal Server Error' });
+      return;
     }
-  };
+
+    // Check if any rows were deleted
+    if (data && data.length > 0) {
+      res.json({ msg: 'Data deleted successfully' });
+    } else {
+      res.status(404).json({ error: 'Data not found' });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+  
+  
+export const updateProgram = async (req, res) => {
+  const { id } = req.params;
+  const {
+    name,
+    price,
+    domain,
+    program_type,
+    registrations_status,
+    description,
+    placement_assurance,
+    image_url,
+    university_name,
+    faculty_profile,
+    learning_hours,
+    certificate_diploma,
+    eligibility_criteria
+  } = req.body;
+
+  try {
+    const { data, error } = await supabase
+      .from('programs') 
+      .update({
+        name,
+        price,
+        domain,
+        program_type,
+        registrations_status,
+        description,
+        placement_assurance,
+        image_url,
+        university_name,
+        faculty_profile,
+        learning_hours,
+        certificate_diploma,
+        eligibility_criteria
+      })
+      .eq('programid', id);
+
+    if (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal Server Error' });
+      return;
+    }
+
+    // Check if any rows were updated
+    if (data && data.length > 0) {
+      res.json({ msg: 'Data updated successfully' });
+    } else {
+      res.status(404).json({ error: 'Data not found' });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
   
   

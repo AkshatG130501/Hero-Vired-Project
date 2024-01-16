@@ -1,8 +1,8 @@
-import { sendOTP } from "../../otp.js";
-import { removeProgram,inProgram,checkName,getTasks } from "../programs/queries.js";
+// import { sendOTP } from "../../otp.js";
+// import { getTasks } from "../programs/queries.js";
 import session from "express-session";
 import bcrypt from "bcrypt";
-import pool from "../../db.js";
+// import pool from "../../db.js";
 
 export const sendOtpToUser = async (req, res) => {
   try {

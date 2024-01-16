@@ -25,7 +25,7 @@ CREATE TABLE public.programs (
     userid INTEGER REFERENCES public.users(userid)
 );
 
-INSERT INTO users (username, email, password)
+INSERT INTO users (fullname, email, password)
 VALUES
   ('user1', 'user1@example.com', 'hashed_password_1'),
   ('user2', 'user2@example.com', 'hashed_password_2'),

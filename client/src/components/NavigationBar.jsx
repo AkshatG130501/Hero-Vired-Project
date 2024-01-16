@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import add from './../assets/add.png';
 import EditDashboard from './EditDashboard';
-// import { useHistory } from 'react-router-dom';
 
 
 export default function NavigationBar({ onAddButtonClick, setSelectedProgram, setShowDashboard }) {
@@ -10,38 +9,29 @@ export default function NavigationBar({ onAddButtonClick, setSelectedProgram, se
   const [selectedCategoryDatabase, setSelectedCategoryDatabase] = useState('All');
   const [programNames, setProgramNames] = useState([]);
 
-  // const history = useHistory();
-
-  // const handleLogout = async () => {
-  //   try {
-  //     await axios.post('http://localhost:3000/logout');
-  //     history.push('/login');
-  //   } catch (error) {
-  //     console.error('Error logging out:', error);
-  //   }
-  // };
 
 
   useEffect(() => {
     const fetchProgramNames = async () => {
       try {
         const response = await axios.get('http://localhost:3000/programs');
-        // Check if 'msg' exists and is an array before setting state
-        if (Array.isArray(response.data.msg)) {
-          // Filter programs based on the selected category
-          let filteredPrograms = response.data.msg;
+        // Check if 'data' exists and is an array before setting state
+        if (Array.isArray(response.data)) {
+          const programs = response.data;
+
+          // logic for filtering based on the selected category
+          let filteredPrograms = programs;
 
           if (selectedCategoryPredefined !== 'All') {
-            filteredPrograms = filteredPrograms.filter(program => {
-              // Custom logic for predefined categories
+            filteredPrograms = programs.filter(program => {
+              // logic for predefined categories
               if (selectedCategoryPredefined === 'Data') {
-                return program.domain === 'data';
+                return program.domain === 'Data';
               } else if (selectedCategoryPredefined === 'Finance') {
-                return program.domain === 'finance';
+                return program.domain === 'Finance';
               } else if (selectedCategoryPredefined === 'Future Tech') {
-                return program.domain === 'tech';
+                return program.domain === 'Tech';
               }
-              // Add more conditions for other predefined categories if needed
 
               return true; // If 'All' is selected, display all programs
             });
@@ -49,7 +39,7 @@ export default function NavigationBar({ onAddButtonClick, setSelectedProgram, se
 
           setProgramNames(filteredPrograms);
         } else {
-          console.error('API response does not contain an array under "msg":', response.data);
+          console.error('API response does not contain an array:', response.data);
         }
       } catch (error) {
         console.error('Error fetching program names:', error);
@@ -57,7 +47,7 @@ export default function NavigationBar({ onAddButtonClick, setSelectedProgram, se
     };
   
     fetchProgramNames();
-  }, [selectedCategoryPredefined]); // Include selectedCategoryPredefined in the dependency array
+  }, [selectedCategoryPredefined]);
 
   const handleButtonClickPredefined = (program) => {
     setSelectedCategoryPredefined(program);
