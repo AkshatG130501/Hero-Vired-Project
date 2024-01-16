@@ -15,7 +15,7 @@ export default function NavigationBar({ onAddButtonClick, setSelectedProgram, se
   useEffect(() => {
     const fetchProgramNames = async () => {
       try {
-        const response = await axios.get(`${backend_url}/programs`);
+        const response = await axios.get('https://hero-vired-n8qo.onrender.com/programs');
         // Check if 'data' exists and is an array before setting state
         if (Array.isArray(response.data)) {
           const programs = response.data;
