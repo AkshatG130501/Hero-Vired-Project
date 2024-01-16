@@ -1,16 +1,63 @@
-import React,{useState} from 'react';
+import React , {useState} from 'react';
 import axios from 'axios';
+import {useNavigate} from 'react-router-dom';
 
-const EditDashboard = () => {
+const EditDashboard = ({selectedProgram, setShowEditDashboard}) => {
 
-  const handleChange = () => {
-    console.log("changed");
+  console.log('selectedProgram', selectedProgram);
+
+    const [programs,setPrograms] = useState({
+      name : "",
+      price:0,
+      domain:"",
+      program_type:"",
+      registrations_status:"",
+      description:"",
+      placement_assurance:false,
+      image_url:"",
+      university_name:"",
+      faculty_profile:"",
+      learning_hours:0,
+      certificate_diploma:"",
+      eligibility_criteria:"",
+    })
+
+  const navigate = useNavigate()
+
+  
+
+  const handleEditChange = (newProgram) => {
+    console.log(newProgram);
+  }
+
+
+  const handleChange = (e) => {
+    const {name,value} = e.target;
+    console.log(name,value);
+    setPrograms((prev)=>({...prev,[e.target.name]:e.target.value}));
+  };
+  const handleChangeInCheckBox = (e) => {
+    const { name, value } = e.target;
+    let modifiedValue = value === "on" ? true : false;
+    console.log(name, modifiedValue);
+    setPrograms((prev) => ({ ...prev, [name]: modifiedValue }));
+  };
+  
+ 
+  const handleClick = async e=>{
+    e.preventDefault()
+    try {
+      await axios.post("/programs", programs)
+      navigate("/")
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
     <div className="px-10 py-12 w-full max-w-screen-lg mx-auto bg-gray-100">
       <h1 className="text-3xl font-bold mb-2 text-black">Edit Program</h1>
-      <p className="text-sm text-black mb-4"><span className="text-red-500">*</span> Required to save as Program</p>
+      <p className="text-sm text-black mb-4"><span className="text-red-500">*</span> Edit Details of Program</p>
 
       <h2 className="text-2xl font-bold mb-2 text-black">Confirm Program</h2>
 
@@ -26,7 +73,7 @@ const EditDashboard = () => {
             <span className="absolute inset-y-0 left-2 flex items-center text-gray-600">INR</span>
             <input
               onChange={handleChange}
-              type="text"
+              type="Number"
               id="price"
               name="price"
               className="block w-full border border-gray-400 rounded-md py-1.5 pl-8 pr-2 focus:outline-none focus:ring focus:border-blue-300"
@@ -56,13 +103,13 @@ const EditDashboard = () => {
         {/* Placement Assurance Checkbox */}
         <div className="flex items-center">
           <input
-            onChange={handleChange}
+            onChange={handleChangeInCheckBox}
             type="checkbox"
-            id="placementAssurance"
-            name="placementAssurance"
+            id="placement_assurance"
+            name="placement_assurance"
             className="mr-2"
           />
-          <label htmlFor="placementAssurance" className="text-black font-bold">Placement Assurance</label>
+          <label htmlFor="placement_assurance" className="text-black font-bold">Placement Assurance</label>
         </div>
       </div>
 
@@ -188,7 +235,7 @@ const EditDashboard = () => {
           </label>
           <input
             onChange={handleChange}
-            type="text"
+            type="number"
             id="learningHours"
             name="learningHours"
             className="block border border-gray-400 rounded-md py-1.5 pl-2 focus:outline-none focus:ring focus:border-blue-300"
@@ -245,7 +292,7 @@ const EditDashboard = () => {
       {/* Delete, Save Draft, Save Program Buttons */}
       <div className="flex justify-between mb-8">
         {/* Delete Button */}
-        <button className="bg-red-500 text-white px-4 py-2 flex items-center space-x-2">
+        <button onClick={() => setShowEditDashboard(false)} className="bg-red-500 text-white px-4 py-2 flex items-center space-x-2">
           <span>Delete</span>
           {/* Add Delete icon here if you have one */}
         </button>
@@ -254,7 +301,7 @@ const EditDashboard = () => {
         <button className="bg-white text-black px-4 py-2">Save Draft</button>
 
         {/* Save Program Button */}
-        <button  className="bg-blue-500 text-white px-4 py-2">Save Program</button>
+        <button onClick={handleClick} className="bg-blue-500 text-white px-4 py-2">Update Program</button>
       </div>
     </div>
   );

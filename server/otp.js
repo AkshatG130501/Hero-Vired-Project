@@ -1,4 +1,5 @@
 import nodemailer from 'nodemailer';
+import pool from './db.js';
 
   // Create a transporter using SMTP
 const transporter = nodemailer.createTransport({
@@ -11,7 +12,20 @@ const transporter = nodemailer.createTransport({
 
 export function sendOTP(email) {
     let otp = Math.floor(1000 + Math.random() * 9000);
+    // todo
+    // add column otp
+    // email, otp
     console.log('OTP:', otp);
+
+    const updateOTPSql = 'UPDATE users SET otp = $1 WHERE email = $2';
+    pool.query(updateOTPSql, [otp, email], (error, result) => {
+        if (error) {
+            console.error('Error updating OTP:', error);
+        } else {
+            console.log('OTP updated successfully');
+        }
+    });
+
     const mailOptions = {
       from: 'adobeashu1812@gmail.com',
       to: email,

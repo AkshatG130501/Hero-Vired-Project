@@ -7,10 +7,10 @@ import NavigationBar from './components/NavigationBar'
 import Dashboard from './components/Dashboard';
 import AddDashboard from './components/AddDashboard';
 import  axios  from 'axios';
-import EditDashboard from './components/EditDashboard';
 
 axios.defaults.baseURL = import.meta.env.VITE_BASEURL;
 axios.defaults.withCredentials = true;
+
 function App() {
 
   const [showAddDashboard, setShowDashboard] = useState(false);
@@ -40,11 +40,6 @@ function App() {
     setShowDashboard(false);
   }
 
-  const handleProgClick = () => {
-    setShowDashboard(false);
-  }
-
-  
   return (
     <>
 
@@ -52,9 +47,12 @@ function App() {
       <div className='w-full flex'>
         {/* Navigation Bar */}
 
-        <NavigationBar  onAddButtonClick={handleAddButtonClick} onProgramClick={handleProgClick} selectedProgram={selectedProgram} setSelectedProgram={setSelectedProgram} setShowDashboard={setShowDashboard} />
+        <NavigationBar  onAddButtonClick={handleAddButtonClick} selectedProgram={selectedProgram} setSelectedProgram={setSelectedProgram} setShowDashboard={setShowDashboard} />
         {showAddDashboard && <AddDashboard onDeleteButtonClick={handleDeleteButton} />}
-        {selectedProgram && !showAddDashboard && <Dashboard selectedProgram={selectedProgram} />}
+        {
+        selectedProgram && 
+        !showAddDashboard &&  
+        <Dashboard selectedProgram={selectedProgram} />}
         {/*Main Component */}
         {/* <main className='flex grow'>
           <Dashboard/>

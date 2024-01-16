@@ -7,7 +7,6 @@ export const getTasks = async () => {
       console.log(result);
       if (result.rows) {
         console.log(`showing all entries`);
-        console.table(result.rows);
       } else {
         console.log(`cannot show entries`);
       }

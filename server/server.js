@@ -1,7 +1,5 @@
 import express from 'express';
-import session from "express-session";
-import bcrypt from "bcrypt";
-import signupRoutes from './src/programs/routes.js';
+import routes from './src/programs/routes.js';
 import cors from 'cors';
 
 const app = express();
@@ -25,10 +23,7 @@ app.get('/',(req,res)=>{
     res.send("Hello World");
 });
 
-app.use('/signup', signupRoutes);
-
-// app.use('/programs',programRoutes);
-// app.use('/programs',programRoutes);
+app.use('/', routes);
 
 app.listen(PORT,()=>{
     console.log(`Server is running on port ${PORT}`);

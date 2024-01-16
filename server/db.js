@@ -1,35 +1,99 @@
-// import { createClient } from '@supabase/supabase-js'
-// const supabaseUrl = 'https://ausfuolwbzhaqmtfuhhf.supabase.co'
-// // const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF1c2Z1b2x3YnpoYXFtdGZ1aGhmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDUxNTk4ODcsImV4cCI6MjAyMDczNTg4N30.h7QV-I_LXAKQCiiTL4KOmB1Xd_YaJDOhstzNwHDOfCs'
-// const supabase_service_key = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF1c2Z1b2x3YnpoYXFtdGZ1aGhmIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcwNTE1OTg4NywiZXhwIjoyMDIwNzM1ODg3fQ.RwE7putPIvofxuEBCXbrEzdGlAS9WA6XB7PleyRcYig';
-// const supabase = createClient(supabaseUrl, supabaseKey)
-
-// export default supabase;
-
-
 import dotenv from 'dotenv';
-import pg from 'pg';
-const { Pool } = pg;
-
 dotenv.config();
+import pg from 'pg';
+const { Client } = pg;
+
+
+
+// const client = new Client({
+//   host: 'localhost',
+//   port: 5432,
+//   database: 'mydatabase',
+//   user: 'postgres',
+//   password: 'mysecretpassword',
+// });
+
+const client = new Client({
+  host: 'dpg-cmj3agla73kc739o4slg-a.oregon-postgres.render.com',
+  port: 5432,
+  database: 'herovired_akshat',
+  user: 'herovired_akshat_user',
+  password: 'Yj7OiyhmRXbRHhSvHSCgFJ1Kep48Qbmx',
+});
+
+await client.connect();
+
+export default client;
 
 // Creating a pool of connections
-const pool = new Pool({
-    user: 'postgres',
-    host: 'localhost',
-    database: "mydatabase",
-    password: "mysecretpassword",
-    port: 5432,
-  });
+// const pool = new Pool({
+//     user: 'postgres',
+//     host: 'localhost',
+//     database: "mydatabase",
+//     password: "mysecretpassword",
+//     port: 5432,
+//   });
+
+
+// const pool = new Pool({
+//   connectionString: process.env.DATABASE_URL
+// });
+
+
 
   // Throws an error on connection
-pool.on('error', (err, client) => {
-    console.error('Unexpected error on idle client', err);
-    console.log(client);
-    process.exit(-1);
-  });
-  
-export default pool;
+// pool.on('error', (err, client) => {
+//     console.error('Unexpected error on idle client', err);
+//     console.log(client);
+//     process.exit(-1);
+//   });
 
+
+// async function getPostgresVersion() {
+//   const client = await pool.connect();
+//   try {
+//     const response = await client.query('SELECT version()');
+//     console.log(response.rows[0]);
+//   } finally {
+//     client.release();
+//   }
+// }
+
+// getPostgresVersion();
+
+// const pool = (() => {
+//   if (process.env.NODE_ENV !== 'production') {
+//       return new Pool({
+//           connectionString: process.env.DATABASE_URL,
+//           ssl: false
+//       });
+//   } else {
+//       return new Pool({
+//           connectionString: process.env.DATABASE_URL,
+//           ssl: {
+//               rejectUnauthorized: false
+//             }
+//       });
+//   } })();
   
-  
+// export default pool;
+
+
+// const pool = new Pool({
+//   connectionString: process.env.DATABASE_URL,
+//   ssl: {
+//     require: true,
+//   },
+// });
+
+// async function getPostgresVersion() {
+//   const client = await pool.connect();
+//   try {
+//     const response = await client.query('SELECT version()');
+//     console.log(response.rows[0]);
+//   } finally {
+//     client.release();
+//   }
+// }
+
+// getPostgresVersion();

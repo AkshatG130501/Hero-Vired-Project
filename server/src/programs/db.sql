@@ -1,3 +1,46 @@
+CREATE TABLE public.users (
+    userid SERIAL PRIMARY KEY,
+    password VARCHAR(255) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    fullname VARCHAR(100),
+    otp INTEGER
+);
+
+
+CREATE TABLE public.programs (
+    programid SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    price INTEGER NOT NULL,
+    domain VARCHAR(50) NOT NULL,
+    program_type VARCHAR(45) NOT NULL,
+    registrations_status VARCHAR(50) NOT NULL,
+    description TEXT,
+    placement_assurance VARCHAR(5) NOT NULL,
+    image_url VARCHAR(255),
+    university_name VARCHAR(100),
+    faculty_profile VARCHAR(255),
+    learning_hours INTEGER,
+    certificate_diploma VARCHAR(20),
+    eligibility_criteria VARCHAR(255),
+    userid INTEGER REFERENCES public.users(userid)
+);
+
+INSERT INTO users (username, email, password)
+VALUES
+  ('user1', 'user1@example.com', 'hashed_password_1'),
+  ('user2', 'user2@example.com', 'hashed_password_2'),
+  ('user3', 'user3@example.com', 'hashed_password_3'),
+  ('user4', 'user4@example.com', 'hashed_password_4'),
+  ('user5', 'user5@example.com', 'hashed_password_5');
+
+INSERT INTO programs (name, price, domain, program_type, registrations_status, description, placement_assurance, image_url, university_name, faculty_profile, learning_hours, certificate_diploma, eligibility_criteria)
+VALUES
+  ('Program 1', 500, 'Tech', 'FT', 'Open', 'Description 1', true, 'https://example.com/image1.jpg', 'University 1', 'Faculty 1', 40, 'Diploma', 'Eligibility 1'),
+  ('Program 2', 700, 'Data', 'PT', 'Closed', 'Description 2', false, 'https://example.com/image2.jpg', 'University 2', 'Faculty 2', 30, 'Certificate', 'Eligibility 2'),
+  ('Program 3', 600, 'Finance', 'FT', 'Open', 'Description 3', true, 'https://example.com/image3.jpg', 'University 3', 'Faculty 3', 35, 'Diploma', 'Eligibility 3'),
+  ('Program 4', 800, 'Tech', 'PT', 'Open', 'Description 4', true, 'https://example.com/image4.jpg', 'University 4', 'Faculty 4', 45, 'Certificate', 'Eligibility 4'),
+  ('Program 5', 550, 'Data', 'FT', 'Closed', 'Description 5', false, 'https://example.com/image5.jpg', 'University 5', 'Faculty 5', 38, 'Diploma', 'Eligibility 5');
+
 
 -- DUMMY DATA
 INSERT INTO programs (

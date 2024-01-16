@@ -2,21 +2,30 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import add from './../assets/add.png';
 import EditDashboard from './EditDashboard';
+// import { useHistory } from 'react-router-dom';
+
 
 export default function NavigationBar({ onAddButtonClick, setSelectedProgram, setShowDashboard }) {
   const [selectedCategoryPredefined, setSelectedCategoryPredefined] = useState('All');
   const [selectedCategoryDatabase, setSelectedCategoryDatabase] = useState('All');
   const [programNames, setProgramNames] = useState([]);
 
-  function handleLogout() {
-    // TODO: logout logic
-  }
+  // const history = useHistory();
+
+  // const handleLogout = async () => {
+  //   try {
+  //     await axios.post('http://localhost:3000/logout');
+  //     history.push('/login');
+  //   } catch (error) {
+  //     console.error('Error logging out:', error);
+  //   }
+  // };
 
 
   useEffect(() => {
     const fetchProgramNames = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/signup/programs');
+        const response = await axios.get('http://localhost:3000/programs');
         // Check if 'msg' exists and is an array before setting state
         if (Array.isArray(response.data.msg)) {
           // Filter programs based on the selected category
@@ -121,7 +130,9 @@ export default function NavigationBar({ onAddButtonClick, setSelectedProgram, se
         </div>
 
         {/* Logout Button */}
-        <button className='border-2 border-black px-4 py-2 bg-red-500 hover:bg-red-700 text-black m-4 rounded-lg' onClick={handleLogout}>Logout</button>
+        <button className='border-2 border-black px-4 py-2 bg-red-500 hover:bg-red-700 text-black m-4 rounded-lg' 
+        // onClick={handleLogout}
+        >Logout</button>
     </div>
     </>
   );

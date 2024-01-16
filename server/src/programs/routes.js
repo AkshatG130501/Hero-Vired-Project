@@ -1,10 +1,11 @@
 import express from 'express';
-import { deleteProgram,addPrograms, getPrograms, getNewUser, postNewUser, /*  postLoginUser, getLoginUser */ 
-updateProgram} from '../controllers/userController.js';
+import { getNewUser, postNewUser, sendOtpToUser, /*  postLoginUser, getLoginUser */} from '../controllers/userController.js';
+import { deleteProgram,addPrograms, getPrograms, updateProgram} from '../controllers/programController.js';
 const router = express.Router();
 
-router.post('/', postNewUser);
+router.post('/signup', postNewUser);
 router.get('/signup', getNewUser);
+router.post('/signup/otp', sendOtpToUser);
 router.get('/programs', getPrograms);
 router.post('/programs',addPrograms);
 router.delete('/programs/:Name',deleteProgram)

@@ -39,7 +39,7 @@ const AddDashboard = ({ onDeleteButtonClick }) => {
   const handleClick = async e=>{
     e.preventDefault()
     try {
-      await axios.post("/signup/programs", programs)
+      await axios.post("/programs", programs)
       navigate("/")
     } catch (error) {
       console.log(error);

@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import EditDashboard from './EditDashboard.jsx';
 
-const Dashboard = ({selectedProgram}) => {
+const Dashboard = ({ selectedProgram }) => {
 
+  const [showEditDashboard, setShowEditDashboard] = useState(false)
   console.log('selectedProgram', selectedProgram);
 
   return (
-    <div className="px-10 py-12 w-full max-w-screen-lg mx-auto bg-gray-100">
+    <>
+    {!showEditDashboard && <div className="px-10 py-12 w-full max-w-screen-lg mx-auto bg-gray-100">
       <h1 className="text-3xl font-bold mb-2 text-black">Program Name</h1>
       <p className="text-sm text-black mb-4"><span className="text-red-500">*</span> Details of the Program</p>
 
@@ -22,6 +25,7 @@ const Dashboard = ({selectedProgram}) => {
           <div className="relative w-48">
             <span className="absolute inset-y-0 left-2 flex items-center text-gray-600">INR</span>
             <input
+              disabled
               value={selectedProgram.price}
               type="Number"
               id="price"
@@ -35,13 +39,14 @@ const Dashboard = ({selectedProgram}) => {
         {/* Domain Drop-down */}
         <div className="flex flex-col">
           <label htmlFor="domain" className="text-black mb-2 font-bold">
-            {selectedProgram.domain}
+            Domain <br/> {selectedProgram.domain}
           </label>
         </div>
 
         {/* Placement Assurance Checkbox */}
         <div className="flex items-center">
           <input
+            disabled
             value={selectedProgram.placement_assurance}
             type="checkbox"
             id="placement_assurance"
@@ -69,6 +74,7 @@ const Dashboard = ({selectedProgram}) => {
             <span className="text-red-500">*</span> Name
           </label>
           <input
+            disabled
             value={selectedProgram.name}
             type="text"
             id="name"
@@ -112,6 +118,7 @@ const Dashboard = ({selectedProgram}) => {
             <span className="text-red-500">*</span> University Name/Partner
           </label>
           <input
+            disabled
             value={selectedProgram.university_name}
             type="text"
             id="universityName"
@@ -124,7 +131,7 @@ const Dashboard = ({selectedProgram}) => {
         {/* Certificate/Diploma Drop-down */}
         <div className="flex flex-col">
           <label htmlFor="certificateDiploma" className="text-black mb-2 font-bold">
-            {selectedProgram.certificate_diploma}
+            Certificate/Diploma <br/>  {selectedProgram.certificate_diploma}
           </label>
           
         </div>
@@ -135,6 +142,7 @@ const Dashboard = ({selectedProgram}) => {
             <span className="text-red-500">*</span> Faculty Profile
           </label>
           <input
+            disabled
             value={selectedProgram.faculty_profile}
             type="text"
             id="facultyProfile"
@@ -170,6 +178,7 @@ const Dashboard = ({selectedProgram}) => {
             Eligibility Criteria
           </label>
           <input
+            disabled
             value={selectedProgram.eligibility_criteria}
             type="text"
             id="eligibilityCriteria"
@@ -185,6 +194,7 @@ const Dashboard = ({selectedProgram}) => {
             <span className="text-red-500">*</span> Image Url
           </label>
           <input
+            disabled
             value={selectedProgram.image_url}
             type="text"
             id="imageUrl"
@@ -201,6 +211,7 @@ const Dashboard = ({selectedProgram}) => {
           <span className="text-red-500">*</span> Description
         </label>
         <input
+          disabled
           value={selectedProgram.description}
           type="text"
           id="description"
@@ -209,7 +220,16 @@ const Dashboard = ({selectedProgram}) => {
           placeholder="Program Information / Header"
         />
       </div>
-    </div>
+      <div className="flex justify-between mb-8">
+        {/* Edit Button */}
+        <button onClick={() => setShowEditDashboard(true)}  className="bg-red-500 text-white px-4 py-2 flex items-center space-x-2">
+          <span>Edit</span> 
+          {/* Add Delete icon here if you have one */}
+        </button>
+      </div>
+    </div>}
+    {showEditDashboard && <EditDashboard setShowEditDashboard={setShowEditDashboard} selectedProgram={selectedProgram} />}
+    </>
   );
 };
 
