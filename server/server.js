@@ -6,12 +6,12 @@ import supabase from './src/config/supabaseClient.js';
 const app = express();
 // app.use(cors());
 const corsOptions = {
-    origin: process.env.FRONTEND_URL || "https://hero-vired-project.vercel.app/",
+    origin: "https://hero-vired-project.vercel.app/",
     credentials: true,
     optionSuccessStatus: 200,
-  };
+};
   
-  app.use(cors(corsOptions));
+app.use(cors(corsOptions));
 // Middleware to parse JSON data in the request body
 app.use(express.json());
 
