@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import add from './../assets/add.png';
 import EditDashboard from './EditDashboard';
+import { backend_url } from '../variables';
 
 
 export default function NavigationBar({ onAddButtonClick, setSelectedProgram, setShowDashboard }) {
@@ -14,7 +15,7 @@ export default function NavigationBar({ onAddButtonClick, setSelectedProgram, se
   useEffect(() => {
     const fetchProgramNames = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/programs');
+        const response = await axios.get(`${backend_url}/programs`);
         // Check if 'data' exists and is an array before setting state
         if (Array.isArray(response.data)) {
           const programs = response.data;
