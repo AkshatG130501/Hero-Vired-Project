@@ -3,7 +3,7 @@ import axios from 'axios';
 // import {useNavigate} from 'react-router-dom';
 import { backend_url } from '../variables.js';
 
-const AddDashboard = ({ onDeleteButtonClick }) => {
+const AddDashboard = ({ setReloadPrograms, onDeleteButtonClick }) => {
   
 
     const [programs,setPrograms] = useState({
@@ -75,12 +75,13 @@ const AddDashboard = ({ onDeleteButtonClick }) => {
   const handleSave = async () => {
     try {
       // Make a POST request to save the new program
-      const response = await axios.post(`https://hero-vired-n8qo.onrender.com/programs`, newProgram); 
+      const response = await axios.post(`http://localhost:3000/programs`, newProgram); 
 
       if (response.status === 201) {
         console.log('Program saved successfully:', response.data);
+        setReloadPrograms((reloadPrograms) => {!reloadPrograms});
       
-      alert('Program Created Successfully : Refresh To Check');
+      alert('Program Created Successfully');
       } else {
         console.error('Error saving program:', response.data.error);
       }

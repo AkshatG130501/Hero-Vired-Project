@@ -13,6 +13,7 @@ axios.defaults.withCredentials = true;
 
 function App() {
 
+  const [reloadPrograms, setReloadPrograms] = useState(false);
   const [showAddDashboard, setShowDashboard] = useState(false);
   const [selectedProgram, setSelectedProgram] = useState(null);
   const [programs,setPrograms] = useState({
@@ -47,12 +48,12 @@ function App() {
       <div className='w-full flex'>
         {/* Navigation Bar */}
 
-        <NavigationBar  onAddButtonClick={handleAddButtonClick} selectedProgram={selectedProgram} setSelectedProgram={setSelectedProgram} setShowDashboard={setShowDashboard} />
-        {showAddDashboard && <AddDashboard onDeleteButtonClick={handleDeleteButton} />}
+        <NavigationBar reloadPrograms={reloadPrograms} onAddButtonClick={handleAddButtonClick} selectedProgram={selectedProgram} setSelectedProgram={setSelectedProgram} setShowDashboard={setShowDashboard} />
+        {showAddDashboard && <AddDashboard setReloadPrograms={setReloadPrograms} onDeleteButtonClick={handleDeleteButton} />}
         {
         selectedProgram && 
         !showAddDashboard &&  
-        <Dashboard selectedProgram={selectedProgram} />}
+        <Dashboard setReloadPrograms={setReloadPrograms} selectedProgram={selectedProgram} />}
         {/*Main Component */}
         {/* <main className='flex grow'>
           <Dashboard/>

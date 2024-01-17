@@ -5,7 +5,7 @@ import EditDashboard from './EditDashboard';
 import { backend_url } from '../variables';
 
 
-export default function NavigationBar({ onAddButtonClick, setSelectedProgram, setShowDashboard }) {
+export default function NavigationBar({ reloadPrograms, onAddButtonClick, setSelectedProgram, setShowDashboard }) {
   const [selectedCategoryPredefined, setSelectedCategoryPredefined] = useState('All');
   const [selectedCategoryDatabase, setSelectedCategoryDatabase] = useState('All');
   const [programNames, setProgramNames] = useState([]);
@@ -15,7 +15,7 @@ export default function NavigationBar({ onAddButtonClick, setSelectedProgram, se
   useEffect(() => {
     const fetchProgramNames = async () => {
       try {
-        const response = await axios.get('https://hero-vired-n8qo.onrender.com/programs');
+        const response = await axios.get('http://localhost:3000/programs');
         console.log(response);
         // Check if 'data' exists and is an array before setting state
         if (Array.isArray(response.data)) {
@@ -49,7 +49,7 @@ export default function NavigationBar({ onAddButtonClick, setSelectedProgram, se
     };
   
     fetchProgramNames();
-  }, [selectedCategoryPredefined]);
+  }, [selectedCategoryPredefined, reloadPrograms]);
 
   const handleButtonClickPredefined = (program) => {
     setSelectedCategoryPredefined(program);

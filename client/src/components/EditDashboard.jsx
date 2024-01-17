@@ -1,9 +1,9 @@
 import React , {useState} from 'react';
 import axios from 'axios';
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { backend_url } from '../variables.js';
 
-const EditDashboard = ({selectedProgram, setShowEditDashboard}) => {
+const EditDashboard = ({setReloadPrograms, selectedProgram, setShowEditDashboard}) => {
 
     const [programs,setPrograms] = useState({
       name : "",
@@ -27,9 +27,10 @@ const EditDashboard = ({selectedProgram, setShowEditDashboard}) => {
 
   const handleDelete = async()=>{
     try {
-      const response = await axios.delete(`https://hero-vired-n8qo.onrender.com/programs/${selectedProgram.programid}`);
+      const response = await axios.delete(`http://localhost:3000/programs/${selectedProgram.programid}`);
       if(response.status==200){
-        alert('Program Deleted Successfully')
+        alert('Program Deleted Successfully');
+        setReloadPrograms((reloadPrograms) => {!reloadPrograms});
       }
     } catch (error) {
       console.log(error);

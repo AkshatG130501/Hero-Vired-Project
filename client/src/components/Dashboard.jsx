@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import EditDashboard from './EditDashboard.jsx';
 
-const Dashboard = ({ selectedProgram }) => {
+const Dashboard = ({ setReloadPrograms, selectedProgram }) => {
 
   const [showEditDashboard, setShowEditDashboard] = useState(false)
   console.log('selectedProgram', selectedProgram);
@@ -232,7 +232,7 @@ const Dashboard = ({ selectedProgram }) => {
           </button>
       </div>
     </div>}
-    {showEditDashboard && <EditDashboard setShowEditDashboard={setShowEditDashboard} selectedProgram={selectedProgram} />}
+    {showEditDashboard && <EditDashboard setReloadPrograms={setReloadPrograms} setShowEditDashboard={setShowEditDashboard} selectedProgram={selectedProgram} />}
     </>
   );
 };
