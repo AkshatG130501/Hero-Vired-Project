@@ -110,7 +110,7 @@ export default function NavigationBar({ reloadPrograms, onAddButtonClick, setSel
         <div className="flex flex-col mt-4 space-y-2">
           {programNames.map(program => (
             <button 
-              key={program.id}
+              key={program.programid}
               className={`transition-colors duration-300 ease-in-out 
                           ${selectedCategoryDatabase === program.name ? 'bg-blue-300' : 'bg-white'} 
                           text-black border border-black rounded-full px-3 py-1.5 text-xs font-bold focus:outline-none`}

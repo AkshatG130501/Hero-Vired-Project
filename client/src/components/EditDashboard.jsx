@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { backend_url } from '../variables.js';
 
 const EditDashboard = ({setReloadPrograms, selectedProgram, setShowEditDashboard}) => {
+  const [isChecked, setIsChecked] = useState(selectedProgram.placement_assurance);
 
     const [programs,setPrograms] = useState({
       name : "",
@@ -36,7 +37,16 @@ const EditDashboard = ({setReloadPrograms, selectedProgram, setShowEditDashboard
       console.log(error);
     }
   }
-  
+  const handleClick = async e=>{
+    try {
+      const response = await axios.put(`/programs/${selectedProgram.programid}`);
+      if(response.status==200){
+        alert('Program edited Successfully');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   const handleEditChange = (newProgram) => {
     console.log(newProgram);
@@ -48,23 +58,36 @@ const EditDashboard = ({setReloadPrograms, selectedProgram, setShowEditDashboard
     console.log(name,value);
     setPrograms((prev)=>({...prev,[e.target.name]:e.target.value}));
   };
-  const handleChangeInCheckBox = (e) => {
+  const handleCheckboxChange = (e) => {
+
     const { name, value } = e.target;
-    let modifiedValue = value === "on" ? true : false;
-    console.log(name, modifiedValue);
-    setPrograms((prev) => ({ ...prev, [name]: modifiedValue }));
+    setIsChecked(!isChecked);
+
+    setPrograms((prev) => ({ ...prev, [name]: !isChecked }));
+    console.log(programs);
   };
+
+
+ 
+  const handleRadioChange = (e) =>{
+    const {name,value} = e.target;
+    console.log(name,value)
+    setPrograms((prevProgram) => ({
+      ...prevProgram,
+      [name]: value,
+    }));
+  }
+  const handleRadio2Change = (e) =>{
+    const {name,value} = e.target;
+    console.log(name,value)
+    setPrograms((prevProgram) => ({
+      ...prevProgram,
+      [name]: value,
+    }));
+  }
   
  
-  const handleClick = async e=>{
-    e.preventDefault()
-    try {
-      await axios.post(`${backend_url}/programs`, programs)
-      navigate("/")
-    } catch (error) {
-      console.log(error);
-    }
-  }
+
 
 
   // if(selectedProgram.program_type=='FT'){
@@ -134,7 +157,7 @@ const EditDashboard = ({setReloadPrograms, selectedProgram, setShowEditDashboard
         {/* Placement Assurance Checkbox */}
         <div className="flex items-center">
           <input
-            onChange={handleChangeInCheckBox}
+            onChange={handleCheckboxChange}
             value={selectedProgram.placement_assurance}
             type="checkbox"
             id="placement_assurance"
@@ -179,11 +202,11 @@ const EditDashboard = ({setReloadPrograms, selectedProgram, setShowEditDashboard
           </label>
           <div className="flex items-center space-x-4">
             <label htmlFor="ft">
-              <input onChange={handleChange} type="radio" id="ft" name="programType" value="FT" className="mr-1" />
+              <input onChange={handleRadioChange} type="radio" id="ft" name="program_type" value="FT" className="mr-1" />
               FT
             </label>
             <label htmlFor="pt">
-              <input onChange={handleChange} type="radio" id="pt" name="programType" value="PT" className="mr-1" />
+              <input onChange={handleRadioChange} type="radio" id="pt" name="program_type" value="PT" className="mr-1" />
               PT
             </label>
           </div>
@@ -196,11 +219,11 @@ const EditDashboard = ({setReloadPrograms, selectedProgram, setShowEditDashboard
           </label>
           <div className="flex items-center space-x-4">
             <label htmlFor="yes">
-              <input onChange={handleChange} type="radio" id="yes" name="registrationOpen" value="Yes" className="mr-1" />
+              <input onChange={handleRadio2Change} type="radio" id="yes" name="registrations_status" value="Yes" className="mr-1" />
               Yes
             </label>
             <label htmlFor="no">
-              <input onChange={handleChange} type="radio" id="no" name="registrationOpen" value="No" className="mr-1" />
+              <input onChange={handleRadio2Change} type="radio" id="no" name="registrations_status" value="No" className="mr-1" />
               No
             </label>
           </div>

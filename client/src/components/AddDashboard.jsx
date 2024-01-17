@@ -1,70 +1,51 @@
-import React,{useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 // import {useNavigate} from 'react-router-dom';
 import { backend_url } from '../variables.js';
 
 const AddDashboard = ({ setReloadPrograms, onDeleteButtonClick }) => {
-  
 
-    const [programs,setPrograms] = useState({
-      name : "",
-      price:0,
-      domain:"",
-      program_type:"",
-      registrations_status:"",
-      description:"",
-      placement_assurance:false,
-      image_url:"",
-      university_name:"",
-      faculty_profile:"",
-      learning_hours:0,
-      certificate_diploma:"",
-      eligibility_criteria:"",
-    })
+  const [isChecked, setIsChecked] = useState(false);
+  const [selectedOption, setSelectedOption] = useState(null);
+  const [registrationOption,setRegistrationOption] = useState(null);
 
-    const [newProgram, setNewProgram] = useState({
-      name: '',
-      price: 0,
-      domain: '',
-      program_type: '',
-      registrations_status: '',
-      description: '',
-      placement_assurance: '',
-      image_url: '',
-      university_name: '',
-      faculty_profile: '',
-      learning_hours: 0,
-      certificate_diploma: '',
-      eligibility_criteria: '',
-      userid: null,
-    });
+
+  const [programs, setPrograms] = useState({
+    name: "",
+    price: 0,
+    domain: "",
+    program_type: "",
+    registrations_status: "",
+    description: "",
+    placement_assurance: false,
+    image_url: "",
+    university_name: "",
+    faculty_profile: "",
+    learning_hours: 0,
+    certificate_diploma: "",
+    eligibility_criteria: "",
+  })
+
+  const [newProgram, setNewProgram] = useState({
+    name: '',
+    price: 0,
+    domain: '',
+    program_type: '',
+    registrations_status: '',
+    description: '',
+    placement_assurance: false,
+    image_url: '',
+    university_name: '',
+    faculty_profile: '',
+    learning_hours: 0,
+    certificate_diploma: '',
+    eligibility_criteria: '',
+    userid: null,
+  });
 
   // const navigate = useNavigate()
 
-  const handleChange = (e) => {
-    const {name,value} = e.target;
-    console.log(name,value);
-    setPrograms((prev)=>({...prev,[e.target.name]:e.target.value}));
-  };
-  const handleInputChangeInCheckBox = (e) => {
-    const { name, value } = e.target;
-    let modifiedValue = value === "on" ? true : false;
-    console.log(name, modifiedValue);
-    setPrograms((prev) => ({ ...prev, [name]: modifiedValue }));
-  };
-  
- 
-  // const handleClick = async e=>{
-  //   e.preventDefault()
-  //   try {
-  //     await axios.post(`${backend_url}/programs`, programs)
-  //     navigate("/")
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
-
-  const handleInputChange = (e) => {
+   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setNewProgram((prevProgram) => ({
       ...prevProgram,
@@ -72,23 +53,55 @@ const AddDashboard = ({ setReloadPrograms, onDeleteButtonClick }) => {
     }));
   };
 
+
+  const handleCheckboxChange = (e) => {
+
+    const { name, value } = e.target;
+    setIsChecked(!isChecked);
+
+    setPrograms((prev) => ({ ...prev, [name]: !isChecked }));
+    console.log(programs);
+  };
+
+
+ 
+  const handleRadioChange = (e) =>{
+    const {name,value} = e.target;
+    setSelectedOption(e.target.value);
+    console.log(name,value)
+    setNewProgram((prevProgram) => ({
+      ...prevProgram,
+      [name]: value,
+    }));
+  }
+  const handleRadio2Change = (e) =>{
+    const {name,value} = e.target;
+    setRegistrationOption(e.target.value);
+    console.log(name,value)
+    setNewProgram((prevProgram) => ({
+      ...prevProgram,
+      [name]: value,
+    }));
+  }
+  
+
   const handleSave = async () => {
     try {
       // Make a POST request to save the new program
-      const response = await axios.post(`/programs`, newProgram); 
+      const response = await axios.post(`/programs`, newProgram);
 
       if (response.status === 201) {
         console.log('Program saved successfully:', response.data);
-        setReloadPrograms((reloadPrograms) => {!reloadPrograms});
-      
-      alert('Program Created Successfully');
+        setReloadPrograms((reloadPrograms) => { !reloadPrograms });
+
+        alert('Program Created Successfully');
       } else {
         console.error('Error saving program:', response.data.error);
       }
     } catch (error) {
       console.error('Error saving program:', error);
     }
-  };  
+  };
 
   return (
     <div className="px-10 py-12 w-full max-w-screen-lg mx-auto bg-gray-100">
@@ -139,7 +152,8 @@ const AddDashboard = ({ setReloadPrograms, onDeleteButtonClick }) => {
         {/* Placement Assurance Checkbox */}
         <div className="flex items-center">
           <input
-            onChange={handleInputChangeInCheckBox}
+            onChange={handleCheckboxChange}
+            checked={isChecked}
             type="checkbox"
             id="placement_assurance"
             name="placement_assurance"
@@ -182,11 +196,12 @@ const AddDashboard = ({ setReloadPrograms, onDeleteButtonClick }) => {
           </label>
           <div className="flex items-center space-x-4">
             <label htmlFor="ft">
-              <input onChange={handleInputChange} type="radio" id="ft" name="programType" value="FT" className="mr-1" />
+              <input onChange={handleRadioChange} type="radio" checked={selectedOption === 'FT'}
+                id="ft" name="program_type" value="FT" className="mr-1" />
               FT
             </label>
             <label htmlFor="pt">
-              <input onChange={handleInputChange} type="radio" id="pt" name="programType" value="PT" className="mr-1" />
+              <input onChange={handleRadioChange} type="radio" id="pt" name="program_type" value="PT" checked={selectedOption === 'PT'} className="mr-1" />
               PT
             </label>
           </div>
@@ -199,17 +214,17 @@ const AddDashboard = ({ setReloadPrograms, onDeleteButtonClick }) => {
           </label>
           <div className="flex items-center space-x-4">
             <label htmlFor="yes">
-              <input onChange={handleInputChange} type="radio" id="yes" name="registrationOpen" value="Yes" className="mr-1" />
+              <input onChange={handleRadio2Change} type="radio" id="yes" name="registrations_status" value="Yes" checked={registrationOption === 'Yes'}  className="mr-1" />
               Yes
             </label>
             <label htmlFor="no">
-              <input onChange={handleInputChange} type="radio" id="no" name="registrationOpen" value="No" className="mr-1" />
+              <input onChange={handleRadio2Change} type="radio" id="no" name="registrations_status" value="No"  checked={registrationOption === 'No'} className="mr-1" />
               No
             </label>
           </div>
         </div>
       </div>
-
+      
       {/* University Name, Certificate/Diploma, Faculty Profile in a single horizontal line */}
       <div className="flex items-center mb-4 space-x-8">
 
