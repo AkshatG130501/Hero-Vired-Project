@@ -87,7 +87,7 @@ const AddDashboard = ({ onDeleteButtonClick }) => {
     } catch (error) {
       console.error('Error saving program:', error);
     }
-  };
+  };  
 
   return (
     <div className="px-10 py-12 w-full max-w-screen-lg mx-auto bg-gray-100">
