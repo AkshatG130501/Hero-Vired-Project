@@ -64,21 +64,21 @@ const EditDashboard = ({selectedProgram, setShowEditDashboard}) => {
   }
 
 
-  if(selectedProgram.program_type=='FT'){
-    document.getElementById('ft').checked = true
-  }else{
-    document.getElementById('pt').checked = false
-  }
+  // if(selectedProgram.program_type=='FT'){
+  //   document.getElementById('ft').checked = true
+  // }else{
+  //   document.getElementById('pt').checked = false
+  // }
 
-  if(selectedProgram.registrations_status=='open'){
-    document.getElementById('yes').checked = true
-  }else{
-    document.getElementById('no').checked = true;
-  }
+  // if(selectedProgram.registrations_status=='open'){
+  //   document.getElementById('yes').checked = true
+  // }else{
+  //   document.getElementById('no').checked = true;
+  // }
 
-  if(selectedProgram.placement_assurance==true){
-    document.getElementById('placement_assurance').checked=true;
-  }
+  // if(selectedProgram.placement_assurance==true){
+  //   document.getElementById('placement_assurance').checked=true;
+  // }
 
   return (
     <div className="px-10 py-12 w-full max-w-screen-lg mx-auto bg-gray-100">
