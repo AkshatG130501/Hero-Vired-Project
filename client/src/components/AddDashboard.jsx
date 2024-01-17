@@ -75,7 +75,7 @@ const AddDashboard = ({ onDeleteButtonClick }) => {
   const handleSave = async () => {
     try {
       // Make a POST request to save the new program
-      const response = await axios.post(`${backend_url}/programs`, newProgram); // Replace with your actual backend API endpoint
+      const response = await axios.post(`https://hero-vired-n8qo.onrender.com/programs`, newProgram); // Replace with your actual backend API endpoint
 
       if (response.status === 201) {
         console.log('Program saved successfully:', response.data);
@@ -329,7 +329,6 @@ const AddDashboard = ({ onDeleteButtonClick }) => {
         {/* Delete Button */}
         <button onClick={onDeleteButtonClick} className="bg-red-500 text-white px-4 py-2 flex items-center space-x-2">
           <span>Delete</span>
-          {/* Add Delete icon here if you have one */}
         </button>
 
         {/* Save Draft Button */}

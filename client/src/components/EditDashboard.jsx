@@ -320,7 +320,7 @@ const EditDashboard = ({selectedProgram, setShowEditDashboard}) => {
       {/* Delete, Update Program Buttons */}
       <div className="flex justify-between mb-8">
         {/* Delete Button */}
-        <button onClick={() => setShowEditDashboard(false)} className="bg-red-500 text-white px-4 py-2 flex items-center space-x-2">
+        <button onClick={handleDelete(selectedProgram.programid)} className="bg-red-500 text-white px-4 py-2 flex items-center space-x-2">
           <span>Delete</span>
         </button>
 
