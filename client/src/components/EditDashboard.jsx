@@ -5,8 +5,6 @@ import { backend_url } from '../variables.js';
 
 const EditDashboard = ({selectedProgram, setShowEditDashboard}) => {
 
-  console.log('selectedProgram', selectedProgram);
-
     const [programs,setPrograms] = useState({
       name : "",
       price:0,
@@ -25,6 +23,16 @@ const EditDashboard = ({selectedProgram, setShowEditDashboard}) => {
 
   const navigate = useNavigate()
 
+  // const programid = selectedProgram.programid;
+
+  const handleDelete = async(programid)=>{
+    try {
+      const response = await axios.delete(`https://hero-vired-n8qo.onrender.com/programs/${programid}`);
+      alert('Program Deleted Successfully')
+    } catch (error) {
+      console.log(error);
+    }
+  }
   
 
   const handleEditChange = (newProgram) => {
@@ -54,6 +62,7 @@ const EditDashboard = ({selectedProgram, setShowEditDashboard}) => {
       console.log(error);
     }
   }
+
 
   if(selectedProgram.program_type=='FT'){
     document.getElementById('ft').checked = true

@@ -75,7 +75,7 @@ const AddDashboard = ({ onDeleteButtonClick }) => {
   const handleSave = async () => {
     try {
       // Make a POST request to save the new program
-      const response = await axios.post(`https://hero-vired-n8qo.onrender.com/programs`, newProgram); // Replace with your actual backend API endpoint
+      const response = await axios.post(`https://hero-vired-n8qo.onrender.com/programs`, newProgram); 
 
       if (response.status === 201) {
         console.log('Program saved successfully:', response.data);
