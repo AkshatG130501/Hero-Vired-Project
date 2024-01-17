@@ -6,21 +6,22 @@ import { backend_url } from '../variables.js';
 const EditDashboard = ({setReloadPrograms, selectedProgram, setShowEditDashboard}) => {
   const [isChecked, setIsChecked] = useState(selectedProgram.placement_assurance);
 
-    const [programs,setPrograms] = useState({
-      name : "",
-      price:0,
-      domain:"",
-      program_type:"",
-      registrations_status:"",
-      description:"",
-      placement_assurance:false,
-      image_url:"",
-      university_name:"",
-      faculty_profile:"",
-      learning_hours:0,
-      certificate_diploma:"",
-      eligibility_criteria:"",
-    })
+    // const [programs,setPrograms] = useState({
+    //   name : selectedProgram.,
+    //   price:0,
+    //   domain:"",
+    //   program_type:"",
+    //   registrations_status:"",
+    //   description:"",
+    //   placement_assurance:false,
+    //   image_url:"",
+    //   university_name:"",
+    //   faculty_profile:"",
+    //   learning_hours:0,
+    //   certificate_diploma:"",
+    //   eligibility_criteria:"",
+    // })
+    const [programs,setPrograms] = useState(selectedProgram);
 
   const navigate = useNavigate()
 
@@ -37,17 +38,17 @@ const EditDashboard = ({setReloadPrograms, selectedProgram, setShowEditDashboard
       console.log(error);
     }
   }
-  const handleClick = async e=>{
+  const handleClick = async () => {
     try {
-      const response = await axios.put(`/programs/${selectedProgram.programid}`);
-      if(response.status==200){
+      const response = await axios.put(`/programs/${selectedProgram.programid}`, programs);
+      if (response.status === 200) {
         alert('Program edited Successfully');
       }
     } catch (error) {
       console.log(error);
     }
-  }
-
+  };
+  
   const handleEditChange = (newProgram) => {
     console.log(newProgram);
   }
@@ -56,15 +57,12 @@ const EditDashboard = ({setReloadPrograms, selectedProgram, setShowEditDashboard
   const handleChange = (e) => {
     const {name,value} = e.target;
     console.log(name,value);
-    setPrograms((prev)=>({...prev,[e.target.name]:e.target.value}));
+    setPrograms((prev)=>({...prev,[name]:value}));
   };
   const handleCheckboxChange = (e) => {
-
-    const { name, value } = e.target;
+    const { name } = e.target;
     setIsChecked(!isChecked);
-
     setPrograms((prev) => ({ ...prev, [name]: !isChecked }));
-    console.log(programs);
   };
 
 
@@ -125,7 +123,7 @@ const EditDashboard = ({setReloadPrograms, selectedProgram, setShowEditDashboard
             <span className="absolute inset-y-0 left-2 flex items-center text-gray-600">INR</span>
             <input
               onChange={handleChange}
-              value={selectedProgram.price}
+              defaultValue={selectedProgram.price}
               type="Number"
               id="price"
               name="price"
@@ -142,7 +140,7 @@ const EditDashboard = ({setReloadPrograms, selectedProgram, setShowEditDashboard
           </label>
           <select
             onChange={handleChange}
-            value={selectedProgram.domain}
+            defaultValue={selectedProgram.domain}
             id="domain"
             name="domain"
             className="block border border-gray-400 rounded-md py-1.5 pl-2 pr-6 focus:outline-none focus:ring focus:border-blue-300"
@@ -158,7 +156,7 @@ const EditDashboard = ({setReloadPrograms, selectedProgram, setShowEditDashboard
         <div className="flex items-center">
           <input
             onChange={handleCheckboxChange}
-            value={selectedProgram.placement_assurance}
+            defaultValue={selectedProgram.placement_assurance}
             type="checkbox"
             id="placement_assurance"
             name="placement_assurance"
@@ -186,7 +184,7 @@ const EditDashboard = ({setReloadPrograms, selectedProgram, setShowEditDashboard
           </label>
           <input
             onChange={handleChange}
-            value={selectedProgram.name}
+            defaultValue={selectedProgram.name}
             type="text"
             id="name"
             name="name"
@@ -240,7 +238,7 @@ const EditDashboard = ({setReloadPrograms, selectedProgram, setShowEditDashboard
           </label>
           <input
             onChange={handleChange}
-            value={selectedProgram.university_name}
+            defaultValue={selectedProgram.university_name}
             type="text"
             id="university_name"
             name="university_name"
@@ -256,7 +254,7 @@ const EditDashboard = ({setReloadPrograms, selectedProgram, setShowEditDashboard
           </label>
           <select
             onChange={handleChange}
-            value={selectedProgram.certificate_diploma}
+            defaultValue={selectedProgram.certificate_diploma}
             id="certificate_diploma"
             name="certificate_diploma"
             className="block border border-gray-400 rounded-md py-1.5 pl-2 pr-6 focus:outline-none focus:ring focus:border-blue-300"
@@ -274,7 +272,7 @@ const EditDashboard = ({setReloadPrograms, selectedProgram, setShowEditDashboard
           </label>
           <input
             onChange={handleChange}
-            value={selectedProgram.faculty_profile}
+            defaultValue={selectedProgram.faculty_profile}
             type="text"
             id="faculty_profile"
             name="faculty_profile"
@@ -294,7 +292,7 @@ const EditDashboard = ({setReloadPrograms, selectedProgram, setShowEditDashboard
           </label>
           <input
             onChange={handleChange}
-            value={selectedProgram.learning_hours}
+            defaultValue={selectedProgram.learning_hours}
             type="number"
             id="learning_hours"
             name="learning_hours"
@@ -310,7 +308,7 @@ const EditDashboard = ({setReloadPrograms, selectedProgram, setShowEditDashboard
           </label>
           <input
             onChange={handleChange}
-            value={selectedProgram.eligibility_criteria}
+            defaultValue={selectedProgram.eligibility_criteria}
             type="text"
             id="eligibility_criteria"
             name="eligibility_criteria"
@@ -326,7 +324,7 @@ const EditDashboard = ({setReloadPrograms, selectedProgram, setShowEditDashboard
           </label>
           <input
             onChange={handleChange}
-            value={selectedProgram.image_url}
+            defaultValue={selectedProgram.image_url}
             type="text"
             id="image_url"
             name="image_url"
@@ -343,7 +341,7 @@ const EditDashboard = ({setReloadPrograms, selectedProgram, setShowEditDashboard
         </label>
         <input
           onChange={handleChange}
-          value={selectedProgram.description}
+          defaultValue={selectedProgram.description}
           type="text"
           id="description"
           name="description"
