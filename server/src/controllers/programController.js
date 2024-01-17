@@ -27,7 +27,7 @@ export const addPrograms = async (req, res) => {
       eligibility_criteria,
       userid
     } = req.body;
-
+    userid = 1;
     const { data, error } = await supabase
       .from('programs')
       .insert([
@@ -107,9 +107,10 @@ export const updateProgram = async (req, res) => {
     faculty_profile,
     learning_hours,
     certificate_diploma,
-    eligibility_criteria
+    eligibility_criteria,
+    userid
   } = req.body;
-
+  userid =1;
   try {
     const { data, error } = await supabase
       .from('programs') 
@@ -126,7 +127,8 @@ export const updateProgram = async (req, res) => {
         faculty_profile,
         learning_hours,
         certificate_diploma,
-        eligibility_criteria
+        eligibility_criteria,
+        userid
       })
       .eq('programid', id);
 
