@@ -74,6 +74,7 @@ const EditDashboard = ({selectedProgram, setShowEditDashboard}) => {
             <span className="absolute inset-y-0 left-2 flex items-center text-gray-600">INR</span>
             <input
               onChange={handleChange}
+              value={selectedProgram.price}
               type="Number"
               id="price"
               name="price"
@@ -90,6 +91,7 @@ const EditDashboard = ({selectedProgram, setShowEditDashboard}) => {
           </label>
           <select
             onChange={handleChange}
+            value={selectedProgram.domain}
             id="domain"
             name="domain"
             className="block border border-gray-400 rounded-md py-1.5 pl-2 pr-6 focus:outline-none focus:ring focus:border-blue-300"
@@ -105,6 +107,7 @@ const EditDashboard = ({selectedProgram, setShowEditDashboard}) => {
         <div className="flex items-center">
           <input
             onChange={handleChangeInCheckBox}
+            value={selectedProgram.placement_assurance}
             type="checkbox"
             id="placement_assurance"
             name="placement_assurance"
@@ -132,6 +135,7 @@ const EditDashboard = ({selectedProgram, setShowEditDashboard}) => {
           </label>
           <input
             onChange={handleChange}
+            value={selectedProgram.name}
             type="text"
             id="name"
             name="name"
@@ -180,14 +184,15 @@ const EditDashboard = ({selectedProgram, setShowEditDashboard}) => {
 
         {/* University Name Text-box */}
         <div className="flex flex-col">
-          <label htmlFor="universityName" className="text-black mb-2 font-bold">
+          <label htmlFor="university_name" className="text-black mb-2 font-bold">
             <span className="text-red-500">*</span> University Name/Partner
           </label>
           <input
             onChange={handleChange}
+            value={selectedProgram.university_name}
             type="text"
-            id="universityName"
-            name="universityName"
+            id="university_name"
+            name="university_name"
             className="block border border-gray-400 rounded-md py-1.5 pl-2 focus:outline-none focus:ring focus:border-blue-300"
             placeholder="Enter university name/partner"
           />
@@ -195,13 +200,14 @@ const EditDashboard = ({selectedProgram, setShowEditDashboard}) => {
 
         {/* Certificate/Diploma Drop-down */}
         <div className="flex flex-col">
-          <label htmlFor="certificateDiploma" className="text-black mb-2 font-bold">
+          <label htmlFor="certificate_diploma" className="text-black mb-2 font-bold">
             <span className="text-red-500">*</span> Certificate or Diploma
           </label>
           <select
             onChange={handleChange}
-            id="certificateDiploma"
-            name="certificateDiploma"
+            value={certificate_diploma}
+            id="certificate_diploma"
+            name="certificate_diploma"
             className="block border border-gray-400 rounded-md py-1.5 pl-2 pr-6 focus:outline-none focus:ring focus:border-blue-300"
           >
             <option value="" disabled selected>Select</option>
@@ -217,9 +223,10 @@ const EditDashboard = ({selectedProgram, setShowEditDashboard}) => {
           </label>
           <input
             onChange={handleChange}
+            value={selectedProgram.faculty_profile}
             type="text"
-            id="facultyProfile"
-            name="facultyProfile"
+            id="faculty_profile"
+            name="faculty_profile"
             className="block border border-gray-400 rounded-md py-1.5 pl-2 focus:outline-none focus:ring focus:border-blue-300"
             placeholder="Enter Linkedin Url"
           />
@@ -231,14 +238,15 @@ const EditDashboard = ({selectedProgram, setShowEditDashboard}) => {
 
         {/* Learning Hours/Duration Text-box */}
         <div className="flex flex-col">
-          <label htmlFor="learningHours" className="text-black mb-2 font-bold">
+          <label htmlFor="learning_hours" className="text-black mb-2 font-bold">
             <span className="text-red-500">*</span> Learning Hours/Duration
           </label>
           <input
             onChange={handleChange}
+            value={selectedProgram.learning_hours}
             type="number"
-            id="learningHours"
-            name="learningHours"
+            id="learning_hours"
+            name="learning_hours"
             className="block border border-gray-400 rounded-md py-1.5 pl-2 focus:outline-none focus:ring focus:border-blue-300"
             placeholder="Enter learning hours/duration"
           />
@@ -246,14 +254,15 @@ const EditDashboard = ({selectedProgram, setShowEditDashboard}) => {
 
         {/* Eligibility Criteria Text-box */}
         <div className="flex flex-col">
-          <label htmlFor="eligibilityCriteria" className="text-black mb-2 font-bold">
+          <label htmlFor="eligibility_criteria" className="text-black mb-2 font-bold">
             Eligibility Criteria
           </label>
           <input
             onChange={handleChange}
+            value={selectedProgram.eligibility_criteria}
             type="text"
-            id="eligibilityCriteria"
-            name="eligibilityCriteria"
+            id="eligibility_criteria"
+            name="eligibility_criteria"
             className="block border border-gray-400 rounded-md py-1.5 pl-2 focus:outline-none focus:ring focus:border-blue-300"
             placeholder="Enter eligibility criteria"
           />
@@ -261,14 +270,15 @@ const EditDashboard = ({selectedProgram, setShowEditDashboard}) => {
 
         {/* Image Url Text-box */}
         <div className="flex flex-col">
-          <label htmlFor="imageUrl" className="text-black mb-2 font-bold">
+          <label htmlFor="image_url" className="text-black mb-2 font-bold">
             <span className="text-red-500">*</span> Image Url
           </label>
           <input
             onChange={handleChange}
+            value={selectedProgram.image_url}
             type="text"
-            id="imageUrl"
-            name="imageUrl"
+            id="image_url"
+            name="image_url"
             className="block border border-gray-400 rounded-md py-1.5 pl-2 focus:outline-none focus:ring focus:border-blue-300"
             placeholder="Enter image url"
           />
@@ -282,6 +292,7 @@ const EditDashboard = ({selectedProgram, setShowEditDashboard}) => {
         </label>
         <input
           onChange={handleChange}
+          value={selectedProgram.description}
           type="text"
           id="description"
           name="description"
