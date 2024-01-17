@@ -15,7 +15,7 @@ export default function NavigationBar({ reloadPrograms, onAddButtonClick, setSel
   useEffect(() => {
     const fetchProgramNames = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/programs');
+        const response = await axios.get(`/programs`);
         console.log(response);
         // Check if 'data' exists and is an array before setting state
         if (Array.isArray(response.data)) {

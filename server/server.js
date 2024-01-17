@@ -4,12 +4,6 @@ import cors from 'cors';
 import supabase from './src/config/supabaseClient.js';
 
 const app = express();
-    // app.use(
-    //     cors({
-    //         origin: "http://localhost:5173/", // Update this with the correct origin of your frontend application
-    //         credentials: true,
-    //       })
-    // );
 
     app.use(cors({
         origin: true,

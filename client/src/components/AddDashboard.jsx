@@ -75,7 +75,7 @@ const AddDashboard = ({ setReloadPrograms, onDeleteButtonClick }) => {
   const handleSave = async () => {
     try {
       // Make a POST request to save the new program
-      const response = await axios.post(`http://localhost:3000/programs`, newProgram); 
+      const response = await axios.post(`/programs`, newProgram); 
 
       if (response.status === 201) {
         console.log('Program saved successfully:', response.data);

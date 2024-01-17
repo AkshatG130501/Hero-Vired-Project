@@ -27,7 +27,7 @@ const EditDashboard = ({setReloadPrograms, selectedProgram, setShowEditDashboard
 
   const handleDelete = async()=>{
     try {
-      const response = await axios.delete(`http://localhost:3000/programs/${selectedProgram.programid}`);
+      const response = await axios.delete(`/programs/${selectedProgram.programid}`);
       if(response.status==200){
         alert('Program Deleted Successfully');
         setReloadPrograms((reloadPrograms) => {!reloadPrograms});
