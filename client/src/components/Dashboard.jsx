@@ -221,10 +221,10 @@ const Dashboard = ({ selectedProgram }) => {
         />
       </div>
       <div className="flex justify-between mb-8">
-        {/* Delete Button */}
+        {/* Delete Button
         <button  className="bg-red-500 text-white px-4 py-2 flex items-center space-x-2">
           <span>Delete</span>
-        </button>
+        </button> */}
 
         {/* Edit Button */}
         <button onClick={() => setShowEditDashboard(true)}  className="bg-blue-500 text-white px-4 py-2">
