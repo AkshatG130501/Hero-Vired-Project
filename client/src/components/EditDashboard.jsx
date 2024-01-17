@@ -146,9 +146,9 @@ const EditDashboard = ({setReloadPrograms, selectedProgram, setShowEditDashboard
             className="block border border-gray-400 rounded-md py-1.5 pl-2 pr-6 focus:outline-none focus:ring focus:border-blue-300"
           >
             <option value="" disabled selected>Choose Domain</option>
-            <option value="tech">Tech</option>
-            <option value="data">Data</option>
-            <option value="finance">Finance</option>
+            <option value="Tech">Tech</option>
+            <option value="Data">Data</option>
+            <option value="Finance">Finance</option>
           </select>
         </div>
 
