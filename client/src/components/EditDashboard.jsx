@@ -55,6 +55,22 @@ const EditDashboard = ({selectedProgram, setShowEditDashboard}) => {
     }
   }
 
+  if(selectedProgram.program_type=='FT'){
+    document.getElementById('ft').checked = true
+  }else{
+    document.getElementById('pt').checked = false
+  }
+
+  if(selectedProgram.registrations_status=='open'){
+    document.getElementById('yes').checked = true
+  }else{
+    document.getElementById('no').checked = true;
+  }
+
+  if(selectedProgram.placement_assurance==true){
+    document.getElementById('placement_assurance').checked=true;
+  }
+
   return (
     <div className="px-10 py-12 w-full max-w-screen-lg mx-auto bg-gray-100">
       <h1 className="text-3xl font-bold mb-2 text-black">Edit Program</h1>
@@ -301,18 +317,14 @@ const EditDashboard = ({selectedProgram, setShowEditDashboard}) => {
         />
       </div>
 
-      {/* Delete, Save Draft, Save Program Buttons */}
+      {/* Delete, Update Program Buttons */}
       <div className="flex justify-between mb-8">
         {/* Delete Button */}
         <button onClick={() => setShowEditDashboard(false)} className="bg-red-500 text-white px-4 py-2 flex items-center space-x-2">
           <span>Delete</span>
-          {/* Add Delete icon here if you have one */}
         </button>
 
-        {/* Save Draft Button */}
-        <button className="bg-white text-black px-4 py-2">Save Draft</button>
-
-        {/* Save Program Button */}
+        {/* Update Program Button */}
         <button onClick={handleClick} className="bg-blue-500 text-white px-4 py-2">Update Program</button>
       </div>
     </div>

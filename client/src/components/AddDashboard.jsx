@@ -79,7 +79,8 @@ const AddDashboard = ({ onDeleteButtonClick }) => {
 
       if (response.status === 201) {
         console.log('Program saved successfully:', response.data);
-        // Optionally, you can reset the form or perform other actions after saving
+      
+      alert('Program Created Successfully : Refresh To Check');
       } else {
         console.error('Error saving program:', response.data.error);
       }
