@@ -205,7 +205,7 @@ const EditDashboard = ({selectedProgram, setShowEditDashboard}) => {
           </label>
           <select
             onChange={handleChange}
-            value={certificate_diploma}
+            value={selectedProgram.certificate_diploma}
             id="certificate_diploma"
             name="certificate_diploma"
             className="block border border-gray-400 rounded-md py-1.5 pl-2 pr-6 focus:outline-none focus:ring focus:border-blue-300"
