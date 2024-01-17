@@ -142,7 +142,7 @@ export const updateProgram = async (req, res) => {
     if (data && data.length > 0) {
       res.json({ msg: 'Data updated successfully' });
     } else {
-      res.status(404).json({ error: 'Data not found' });
+      res.status(200).json({ error: 'Data not found' });
     }
   } catch (err) {
     console.error(err);
