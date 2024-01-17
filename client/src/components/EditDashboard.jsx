@@ -25,9 +25,9 @@ const EditDashboard = ({selectedProgram, setShowEditDashboard}) => {
 
   // const programid = selectedProgram.programid;
 
-  const handleDelete = async(programid)=>{
+  const handleDelete = async()=>{
     try {
-      const response = await axios.delete(`https://hero-vired-n8qo.onrender.com/programs/${programid}`);
+      const response = await axios.delete(`https://hero-vired-n8qo.onrender.com/programs/${selectedProgram.programid}`);
       alert('Program Deleted Successfully')
     } catch (error) {
       console.log(error);
@@ -329,7 +329,7 @@ const EditDashboard = ({selectedProgram, setShowEditDashboard}) => {
       {/* Delete, Update Program Buttons */}
       <div className="flex justify-between mb-8">
         {/* Delete Button */}
-        <button onClick={handleDelete(selectedProgram.programid)} className="bg-red-500 text-white px-4 py-2 flex items-center space-x-2">
+        <button onClick={handleDelete(selectedProgram)} className="bg-red-500 text-white px-4 py-2 flex items-center space-x-2">
           <span>Delete</span>
         </button>
 
